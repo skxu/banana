@@ -61,9 +61,12 @@ var area2 = d3.svg.area()
     .y1(function(d) { return y2(d.avg_pkt_size); });
 
 
+d3.select("body").append("h1").text("AVERAGE PACKET SIZE");
+
 var avg_pkt_size_svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
+
 
 
 avg_pkt_size_svg.append("defs").append("clipPath")
@@ -113,10 +116,12 @@ var tp_area2 = d3.svg.area()
     .y0(height2)
     .y1(function(d) { return tp_y2(d.total_pkt); });
 
+d3.select("body").append("h1").text("TOTAL PACKET COUNT");
 
 var tp_svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
+
 
 
 tp_svg.append("defs").append("clipPath")
@@ -166,10 +171,12 @@ var asi_area2 = d3.svg.area()
     .y0(height2)
     .y1(function(d) { return asi_y2(d.avg_size_ip); });
 
+d3.select("body").append("h1").text("AVERAGE BYTES SENT PER UNIQUE IP");
 
 var asi_svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
+
 
 
 asi_svg.append("defs").append("clipPath")
@@ -220,9 +227,12 @@ var tsip_area2 = d3.svg.area()
     .y1(function(d) { return tsip_y2(d.total_src_ip); });
 
 
+d3.select("body").append("h1").text("TOTAL UNIQUE SOURCE IP");
+
 var tsip_svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
+
 
 
 tsip_svg.append("defs").append("clipPath")
