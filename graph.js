@@ -1,4 +1,3 @@
-
   
 /*
 d3.text("trace10", function(d) {
@@ -27,9 +26,9 @@ d3.text("trace10", function(d) {
 };
 */
 
-    var margin = {top: 10, right: 10, bottom: 100, left: 40},
-    margin2 = {top: 430, right: 10, bottom: 20, left: 40},
-    width = 960 - margin.left - margin.right,
+    var margin = {top: 10, right: 10, bottom: 100, left: 80},
+    margin2 = {top: 430, right: 10, bottom: 20, left: 80},
+    width = 1000 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom,
     height2 = 500 - margin2.top - margin2.bottom;
 
@@ -305,7 +304,58 @@ var esip_context = esip_svg.append("g")
     .attr("class", "esip_context")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
+/* ============================================================= 
+   ===== TOTAL UNIQUE DST IP PER 10 SECOND SLICE ======
+   =============================================================
+  
+*/
 
+var tdip_x = d3.scale.linear().range([0, width]),
+    tdip_x2 = d3.scale.linear().range([0, width]),
+    tdip_y = d3.scale.linear().range([height, 0]),
+    tdip_y2 = d3.scale.linear().range([height2, 0]);
+
+var tdip_xAxis = d3.svg.axis().scale(tdip_x).orient("bottom"),
+    tdip_xAxis2 = d3.svg.axis().scale(tdip_x2).orient("bottom"),
+    tdip_yAxis = d3.svg.axis().scale(tdip_y).orient("left");
+
+var tdip_brush = d3.svg.brush()
+    .x(tdip_x2)
+    .on("brush", tdip_brushed);
+
+var tdip_area = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return tdip_x(d.time); })
+    .y0(height)
+    .y1(function(d) { return tdip_y(d.total_dst_ip); });
+
+var tdip_area2 = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return tdip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { return tdip_y2(d.total_dst_ip); });
+
+d3.select("body").append("h1").text("UNIQUE DST IP'S");
+
+var tdip_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+tdip_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+var tdip_focus = tdip_svg.append("g")
+    .attr("class", "tdip_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var tdip_context = tdip_svg.append("g")
+    .attr("class", "tdip_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
 
 
@@ -329,7 +379,7 @@ function graph(source) {
   
   d3.csv(source, type, function(error, data) {
     x.domain(d3.extent(data.map(function(d,i) { 
-      return i; 
+      return i*10; 
     })));
     y.domain([0, d3.max(data.map(function(d) { return d.avg_pkt_size; }))]);
     x2.domain(x.domain());
@@ -348,7 +398,8 @@ function graph(source) {
     focus.append("g")
         .attr("class", "y axis")
         .call(yAxis);
-
+    
+    
     context.append("path")
         .datum(data)
         .attr("class", "area")
@@ -366,13 +417,28 @@ function graph(source) {
         .attr("y", -6)
         .attr("height", height2 + 7);
 
+    focus.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text("Time (seconds)");
+
+    focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -90)
+        .attr("dy", "0.75em")
+        .attr("transform", "rotate(-90)")
+        .text("Average Packet Size (Bytes)");
 
     //TOTAL PACKET FOR 10 SECOND SLICES
 
     tp_x.domain(d3.extent(data.map(function(d,i) { 
-      return i; 
+      return i*10; 
     })));
-    tp_y.domain([0, d3.max(data.map(function(d) { console.log(d.total_pkt); return d.total_pkt; }))]);
+    tp_y.domain([0, d3.max(data.map(function(d) { return d.total_pkt; }))]);
     tp_x2.domain(tp_x.domain());
     tp_y2.domain(tp_y.domain());
     
@@ -406,11 +472,27 @@ function graph(source) {
       .selectAll("rect")
         .attr("y", -6)
         .attr("height", height2 + 7);
+    
+    tp_focus.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text("Time (seconds)");
+
+    tp_focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -90)
+        .attr("dy", "0.75em")
+        .attr("transform", "rotate(-90)")
+        .text("Packet Count In Past 10 Seconds");
 
     //AVERAGE SIZE IN BYTES PER UNIQUE IP PER 10 SECOND SLICE 
 
     asi_x.domain(d3.extent(data.map(function(d,i) { 
-      return i; 
+      return i*10; 
     })));
     asi_y.domain([0, d3.max(data.map(function(d) { return d.avg_size_ip; }))]);
     asi_x2.domain(asi_x.domain());
@@ -446,12 +528,28 @@ function graph(source) {
       .selectAll("rect")
         .attr("y", -6)
         .attr("height", height2 + 7);
+    
+    asi_focus.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text("Time (seconds)");
+
+    asi_focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -90)
+        .attr("dy", "0.75em")
+        .attr("transform", "rotate(-90)")
+        .text("Avg Bytes Sent Per Unique IP");
 
 
     //TOTAL SRC IP PER 10 SECOND SLICE 
 
     tsip_x.domain(d3.extent(data.map(function(d,i) { 
-      return i; 
+      return i*10; 
     })));
     tsip_y.domain([0, d3.max(data.map(function(d) { return d.total_src_ip; }))]);
     tsip_x2.domain(tsip_x.domain());
@@ -487,11 +585,27 @@ function graph(source) {
       .selectAll("rect")
         .attr("y", -6)
         .attr("height", height2 + 7);
+    
+    tsip_focus.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text("Time (seconds)");
+
+    tsip_focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -90)
+        .attr("dy", "0.75em")
+        .attr("transform", "rotate(-90)")
+        .text("Unique SRC IP's");
 
     //ENTROPY SRC IP PER 10 SECOND SLICE 
 
     esip_x.domain(d3.extent(data.map(function(d,i) { 
-      return i; 
+      return i*10; 
     })));
     esip_y.domain([0, d3.max(data.map(function(d) { return d.entropy_src_ip; }))]);
     esip_x2.domain(esip_x.domain());
@@ -527,7 +641,78 @@ function graph(source) {
       .selectAll("rect")
         .attr("y", -6)
         .attr("height", height2 + 7);
+    
+    esip_focus.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text("Time (seconds)");
 
+    esip_focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -90)
+        .attr("dy", "0.75em")
+        .attr("transform", "rotate(-90)")
+        .text("Shannon Entropy of SRC IP's");
+
+    //TOTAL UNIQUE DST IP FOR 10 SECOND SLICES
+
+    tdip_x.domain(d3.extent(data.map(function(d,i) { 
+      return i*10; 
+    })));
+    tdip_y.domain([0, d3.max(data.map(function(d) {return d.total_dst_ip; }))]);
+    tdip_x2.domain(tdip_x.domain());
+    tdip_y2.domain(tdip_y.domain());
+    
+    tdip_focus.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", tdip_area);
+
+    tdip_focus.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(tdip_xAxis);
+
+    tdip_focus.append("g")
+        .attr("class", "y axis")
+        .call(tdip_yAxis);
+
+    tdip_context.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", tdip_area2);
+
+    tdip_context.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height2 + ")")
+        .call(tdip_xAxis2);
+
+    tdip_context.append("g")
+        .attr("class", "x brush")
+        .call(tdip_brush)
+      .selectAll("rect")
+        .attr("y", -6)
+        .attr("height", height2 + 7);
+
+    tdip_focus.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text("Time (seconds)");
+
+    tdip_focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -90)
+        .attr("dy", "0.75em")
+        .attr("transform", "rotate(-90)")
+        .text("Unique DST IP's");
     
   });
 
@@ -572,7 +757,13 @@ function esip_brushed() {
   esip_focus.select(".x.axis").call(esip_xAxis);
 }
 
+//TOTAL UNIQUE DST IP PER 10 SECOND SLICE
 
+function tdip_brushed() {
+  tdip_x.domain(tdip_brush.empty() ? tdip_x2.domain() : tdip_brush.extent());
+  tdip_focus.select(".area").attr("d", tdip_area);
+  tdip_focus.select(".x.axis").call(tdip_xAxis);
+}
 
 function type(d) {
   //d.date = parseDate(d.date);
@@ -692,7 +883,7 @@ asi_context = asi_svg.append("g")
   
 */
 
-d3.select("body").append("h1").text("TOTAL UNIQUE SOURCE IP");  
+d3.select("body").append("h1").text("UNIQUE SOURCE IP'S");  
   
 tsip_svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -715,7 +906,7 @@ tsip_context = tsip_svg.append("g")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
 /* ============================================================= 
-   ===== TOTAL SRC IP PER 10 SECOND SLICE ======
+   ===== ENTROPY SRC IP PER 10 SECOND SLICE ======
    =============================================================
   
 */
@@ -742,7 +933,35 @@ esip_context = esip_svg.append("g")
     .attr("class", "esip_context")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
+/* ============================================================= 
+   ===== TOTAL DST IP PER 10 SECOND SLICE ======
+   =============================================================
+  
+*/
 
+d3.select("body").append("h1").text("UNIQUE DST IP'S");  
+  
+tdip_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+tdip_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+tdip_focus = tdip_svg.append("g")
+    .attr("class", "tdip_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+tdip_context = tdip_svg.append("g")
+    .attr("class", "tdip_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+  
 }
 
 
