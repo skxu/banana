@@ -357,6 +357,59 @@ var tdip_context = tdip_svg.append("g")
     .attr("class", "tdip_context")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
+/* ============================================================= 
+   ===== ENTROPY TCP FLAG PER 10 SECOND SLICE ======
+   =============================================================
+  
+*/
+
+var etcpf_x = d3.scale.linear().range([0, width]),
+    etcpf_x2 = d3.scale.linear().range([0, width]),
+    etcpf_y = d3.scale.linear().range([height, 0]),
+    etcpf_y2 = d3.scale.linear().range([height2, 0]);
+
+var etcpf_xAxis = d3.svg.axis().scale(etcpf_x).orient("bottom"),
+    etcpf_xAxis2 = d3.svg.axis().scale(etcpf_x2).orient("bottom"),
+    etcpf_yAxis = d3.svg.axis().scale(etcpf_y).orient("left");
+
+var etcpf_brush = d3.svg.brush()
+    .x(etcpf_x2)
+    .on("brush", etcpf_brushed);
+
+var etcpf_area = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return etcpf_x(d.time); })
+    .y0(height)
+    .y1(function(d) { return etcpf_y(d.entropy_tcp_flag); });
+
+var etcpf_area2 = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return etcpf_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { return etcpf_y2(d.entropy_tcp_flag); });
+
+
+d3.select("body").append("h1").text("ENTROPY OF TCP FLAG");
+
+var etcpf_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+etcpf_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+var etcpf_focus = etcpf_svg.append("g")
+    .attr("class", "etcpf_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var etcpf_context = etcpf_svg.append("g")
+    .attr("class", "etcpf_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
 
 
@@ -713,8 +766,66 @@ function graph(source) {
         .attr("dy", "0.75em")
         .attr("transform", "rotate(-90)")
         .text("Unique DST IP's");
+
+  
+  //ENTROPY OF TCP FLAG FOR 10 SECOND SLICES
+
+    etcpf_x.domain(d3.extent(data.map(function(d,i) { 
+      return i*10; 
+    })));
+    etcpf_y.domain([0, d3.max(data.map(function(d) {return d.entropy_tcp_flag; }))]);
+    etcpf_x2.domain(etcpf_x.domain());
+    etcpf_y2.domain(etcpf_y.domain());
+    
+    etcpf_focus.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", etcpf_area);
+
+    etcpf_focus.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(etcpf_xAxis);
+
+    etcpf_focus.append("g")
+        .attr("class", "y axis")
+        .call(etcpf_yAxis);
+
+    etcpf_context.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", etcpf_area2);
+
+    etcpf_context.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height2 + ")")
+        .call(etcpf_xAxis2);
+
+    etcpf_context.append("g")
+        .attr("class", "x brush")
+        .call(etcpf_brush)
+      .selectAll("rect")
+        .attr("y", -6)
+        .attr("height", height2 + 7);
+
+    etcpf_focus.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text("Time (seconds)");
+
+    etcpf_focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -90)
+        .attr("dy", "0.75em")
+        .attr("transform", "rotate(-90)")
+        .text("ENTROPY OF TCP FLAG");
     
   });
+
 
 }
 
@@ -763,6 +874,14 @@ function tdip_brushed() {
   tdip_x.domain(tdip_brush.empty() ? tdip_x2.domain() : tdip_brush.extent());
   tdip_focus.select(".area").attr("d", tdip_area);
   tdip_focus.select(".x.axis").call(tdip_xAxis);
+}
+
+//ENTROPY TCP FLAG PER 10 SECOND SLICE
+
+function etcpf_brushed() {
+  etcpf_x.domain(etcpf_brush.empty() ? etcpf_x2.domain() : etcpf_brush.extent());
+  etcpf_focus.select(".area").attr("d", etcpf_area);
+  etcpf_focus.select(".x.axis").call(etcpf_xAxis);
 }
 
 function type(d) {
@@ -961,6 +1080,39 @@ tdip_context = tdip_svg.append("g")
     .attr("class", "tdip_context")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
+  
+  /* ============================================================= 
+   ===== ENTROPY SRC IP PER 10 SECOND SLICE ======
+   =============================================================
+  
+*/
+
+d3.select("body").append("h1").text("ENTROPY OF TCP FLAG");  
+  
+etcpf_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+etcpf_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+etcpf_focus = etcpf_svg.append("g")
+    .attr("class", "etcpf_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+etcpf_context = etcpf_svg.append("g")
+    .attr("class", "etcpf_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+  
+  
+  
+  
   
 }
 
