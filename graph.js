@@ -358,6 +358,283 @@ var tdip_context = tdip_svg.append("g")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
 /* ============================================================= 
+   ===== ENTROPY DST IP PER 10 SECOND SLICE ======
+   =============================================================
+  
+*/
+
+var edip_x = d3.scale.linear().range([0, width]),
+    edip_x2 = d3.scale.linear().range([0, width]),
+    edip_y = d3.scale.linear().range([height, 0]),
+    edip_y2 = d3.scale.linear().range([height2, 0]);
+
+var edip_xAxis = d3.svg.axis().scale(edip_x).orient("bottom"),
+    edip_xAxis2 = d3.svg.axis().scale(edip_x2).orient("bottom"),
+    edip_yAxis = d3.svg.axis().scale(edip_y).orient("left");
+
+var edip_brush = d3.svg.brush()
+    .x(edip_x2)
+    .on("brush", edip_brushed);
+
+var edip_area = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return edip_x(d.time); })
+    .y0(height)
+    .y1(function(d) { return edip_y(d.entropy_dst_ip); });
+
+var edip_area2 = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return edip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { return edip_y2(d.entropy_dst_ip); });
+
+
+d3.select("body").append("h1").text("ENTROPY OF DST IP");
+
+var edip_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+edip_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+var edip_focus = edip_svg.append("g")
+    .attr("class", "edip_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var edip_context = edip_svg.append("g")
+    .attr("class", "edip_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+/* ============================================================= 
+   ===== TOTAL SRC PORT PER 10 SECOND SLICE ======
+   =============================================================
+  
+*/
+
+var tsp_x = d3.scale.linear().range([0, width]),
+    tsp_x2 = d3.scale.linear().range([0, width]),
+    tsp_y = d3.scale.linear().range([height, 0]),
+    tsp_y2 = d3.scale.linear().range([height2, 0]);
+
+var tsp_xAxis = d3.svg.axis().scale(tsp_x).orient("bottom"),
+    tsp_xAxis2 = d3.svg.axis().scale(tsp_x2).orient("bottom"),
+    tsp_yAxis = d3.svg.axis().scale(tsp_y).orient("left");
+
+var tsp_brush = d3.svg.brush()
+    .x(tsp_x2)
+    .on("brush", tsp_brushed);
+
+var tsp_area = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return tsp_x(d.time); })
+    .y0(height)
+    .y1(function(d) { return tsp_y(d.total_src_prt); });
+
+var tsp_area2 = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return tsp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { return tsp_y2(d.total_src_prt); });
+
+
+d3.select("body").append("h1").text("TOTAL SRC PORT");
+
+var tsp_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+tsp_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+var tsp_focus = tsp_svg.append("g")
+    .attr("class", "tsp_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var tsp_context = tsp_svg.append("g")
+    .attr("class", "tsp_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+/* ============================================================= 
+   ===== ENTROPY SRC PORT PER 10 SECOND SLICE ======
+   =============================================================
+  
+*/
+
+var esp_x = d3.scale.linear().range([0, width]),
+    esp_x2 = d3.scale.linear().range([0, width]),
+    esp_y = d3.scale.linear().range([height, 0]),
+    esp_y2 = d3.scale.linear().range([height2, 0]);
+
+var esp_xAxis = d3.svg.axis().scale(esp_x).orient("bottom"),
+    esp_xAxis2 = d3.svg.axis().scale(esp_x2).orient("bottom"),
+    esp_yAxis = d3.svg.axis().scale(esp_y).orient("left");
+
+var esp_brush = d3.svg.brush()
+    .x(esp_x2)
+    .on("brush", esp_brushed);
+
+var esp_area = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return esp_x(d.time); })
+    .y0(height)
+    .y1(function(d) { return esp_y(d.entropy_src_prt); });
+
+var esp_area2 = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return esp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { return esp_y2(d.entropy_src_prt); });
+
+
+d3.select("body").append("h1").text("ENTROPY OF SRC PORT");
+
+var esp_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+esp_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+var esp_focus = esp_svg.append("g")
+    .attr("class", "esp_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var esp_context = esp_svg.append("g")
+    .attr("class", "esp_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+/* ============================================================= 
+   ===== TOTAL DST PORT PER 10 SECOND SLICE ======
+   =============================================================
+  
+*/
+
+var tdp_x = d3.scale.linear().range([0, width]),
+    tdp_x2 = d3.scale.linear().range([0, width]),
+    tdp_y = d3.scale.linear().range([height, 0]),
+    tdp_y2 = d3.scale.linear().range([height2, 0]);
+
+var tdp_xAxis = d3.svg.axis().scale(tdp_x).orient("bottom"),
+    tdp_xAxis2 = d3.svg.axis().scale(tdp_x2).orient("bottom"),
+    tdp_yAxis = d3.svg.axis().scale(tdp_y).orient("left");
+
+var tdp_brush = d3.svg.brush()
+    .x(tdp_x2)
+    .on("brush", tdp_brushed);
+
+var tdp_area = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return tdp_x(d.time); })
+    .y0(height)
+    .y1(function(d) { return tdp_y(d.total_dst_prt); });
+
+var tdp_area2 = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return tdp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { return tdp_y2(d.total_dst_prt); });
+
+
+d3.select("body").append("h1").text("TOTAL UNIQUE DST PORT");
+
+var tdp_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+tdp_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+var tdp_focus = tdp_svg.append("g")
+    .attr("class", "tdp_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var tdp_context = tdp_svg.append("g")
+    .attr("class", "tdp_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+
+/* ============================================================= 
+   ===== ENTROPY DST PORT PER 10 SECOND SLICE ======
+   =============================================================
+  
+*/
+
+var edp_x = d3.scale.linear().range([0, width]),
+    edp_x2 = d3.scale.linear().range([0, width]),
+    edp_y = d3.scale.linear().range([height, 0]),
+    edp_y2 = d3.scale.linear().range([height2, 0]);
+
+var edp_xAxis = d3.svg.axis().scale(edp_x).orient("bottom"),
+    edp_xAxis2 = d3.svg.axis().scale(edp_x2).orient("bottom"),
+    edp_yAxis = d3.svg.axis().scale(edp_y).orient("left");
+
+var edp_brush = d3.svg.brush()
+    .x(edp_x2)
+    .on("brush", edp_brushed);
+
+var edp_area = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return edp_x(d.time); })
+    .y0(height)
+    .y1(function(d) { return edp_y(d.entropy_dst_prt); });
+
+var edp_area2 = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return edp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { return edp_y2(d.entropy_dst_prt); });
+
+
+d3.select("body").append("h1").text("ENTROPY OF DST PORT");
+
+var edp_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+edp_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+var edp_focus = edp_svg.append("g")
+    .attr("class", "edp_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var edp_context = edp_svg.append("g")
+    .attr("class", "edp_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+
+
+
+
+
+
+/* ============================================================= 
    ===== ENTROPY TCP FLAG PER 10 SECOND SLICE ======
    =============================================================
   
@@ -412,6 +689,59 @@ var etcpf_context = etcpf_svg.append("g")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
 
+/* ============================================================= 
+   ===== AVG TCP WINDOW SIZE PER 10 SECOND SLICE ======
+   =============================================================
+  
+*/
+
+var avgw_x = d3.scale.linear().range([0, width]),
+    avgw_x2 = d3.scale.linear().range([0, width]),
+    avgw_y = d3.scale.linear().range([height, 0]),
+    avgw_y2 = d3.scale.linear().range([height2, 0]);
+
+var avgw_xAxis = d3.svg.axis().scale(avgw_x).orient("bottom"),
+    avgw_xAxis2 = d3.svg.axis().scale(avgw_x2).orient("bottom"),
+    avgw_yAxis = d3.svg.axis().scale(avgw_y).orient("left");
+
+var avgw_brush = d3.svg.brush()
+    .x(avgw_x2)
+    .on("brush", avgw_brushed);
+
+var avgw_area = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return avgw_x(d.time); })
+    .y0(height)
+    .y1(function(d) { return avgw_y(d.avg_window_size); });
+
+var avgw_area2 = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return avgw_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { return avgw_y2(d.avg_window_size); });
+
+
+d3.select("body").append("h1").text("AVERAGE TCP WINDOW SIZE (BYTES)");
+
+var avgw_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+avgw_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+var avgw_focus = avgw_svg.append("g")
+    .attr("class", "avgw_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var avgw_context = avgw_svg.append("g")
+    .attr("class", "avgw_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
 
 
@@ -428,7 +758,7 @@ var etcpf_context = etcpf_svg.append("g")
 
 
 function graph(source) {
-  clean();
+  clean(source);
   
   d3.csv(source, type, function(error, data) {
     x.domain(d3.extent(data.map(function(d,i) { 
@@ -767,7 +1097,288 @@ function graph(source) {
         .attr("transform", "rotate(-90)")
         .text("Unique DST IP's");
 
+    //ENTROPY OF TCP FLAG FOR 10 SECOND SLICES
+
+    edip_x.domain(d3.extent(data.map(function(d,i) { 
+      return i*10; 
+    })));
+    edip_y.domain([0, d3.max(data.map(function(d) {return d.entropy_dst_ip; }))]);
+    edip_x2.domain(edip_x.domain());
+    edip_y2.domain(edip_y.domain());
+    
+    edip_focus.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", edip_area);
+
+    edip_focus.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(edip_xAxis);
+
+    edip_focus.append("g")
+        .attr("class", "y axis")
+        .call(edip_yAxis);
+
+    edip_context.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", edip_area2);
+
+    edip_context.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height2 + ")")
+        .call(edip_xAxis2);
+
+    edip_context.append("g")
+        .attr("class", "x brush")
+        .call(edip_brush)
+      .selectAll("rect")
+        .attr("y", -6)
+        .attr("height", height2 + 7);
+
+    edip_focus.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text("Time (seconds)");
+
+    edip_focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -90)
+        .attr("dy", "0.75em")
+        .attr("transform", "rotate(-90)")
+        .text("ENTROPY OF DST IP");
+    
+    //TOTAL SRC PRT FOR 10 SECOND SLICES
+
+    tsp_x.domain(d3.extent(data.map(function(d,i) { 
+      return i*10; 
+    })));
+    tsp_y.domain([0, d3.max(data.map(function(d) {return d.total_src_prt; }))]);
+    tsp_x2.domain(tsp_x.domain());
+    tsp_y2.domain(tsp_y.domain());
+    
+    tsp_focus.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", tsp_area);
+
+    tsp_focus.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(tsp_xAxis);
+
+    tsp_focus.append("g")
+        .attr("class", "y axis")
+        .call(tsp_yAxis);
+
+    tsp_context.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", tsp_area2);
+
+    tsp_context.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height2 + ")")
+        .call(tsp_xAxis2);
+
+    tsp_context.append("g")
+        .attr("class", "x brush")
+        .call(tsp_brush)
+      .selectAll("rect")
+        .attr("y", -6)
+        .attr("height", height2 + 7);
+
+    tsp_focus.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text("Time (seconds)");
+
+    tsp_focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -90)
+        .attr("dy", "0.75em")
+        .attr("transform", "rotate(-90)")
+        .text("TOTAL SRC PRT");
+    
+    //ENTROPY OF SRC PRT FOR 10 SECOND SLICES
+
+    esp_x.domain(d3.extent(data.map(function(d,i) { 
+      return i*10; 
+    })));
+    esp_y.domain([0, d3.max(data.map(function(d) {return d.entropy_src_prt; }))]);
+    esp_x2.domain(esp_x.domain());
+    esp_y2.domain(esp_y.domain());
+    
+    esp_focus.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", esp_area);
+
+    esp_focus.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(esp_xAxis);
+
+    esp_focus.append("g")
+        .attr("class", "y axis")
+        .call(esp_yAxis);
+
+    esp_context.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", esp_area2);
+
+    esp_context.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height2 + ")")
+        .call(esp_xAxis2);
+
+    esp_context.append("g")
+        .attr("class", "x brush")
+        .call(esp_brush)
+      .selectAll("rect")
+        .attr("y", -6)
+        .attr("height", height2 + 7);
+
+    esp_focus.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text("Time (seconds)");
+
+    esp_focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -90)
+        .attr("dy", "0.75em")
+        .attr("transform", "rotate(-90)")
+        .text("ENTROPY OF SRC PRT");
   
+    //TOTAL DST PORT FOR 10 SECOND SLICES
+
+    tdp_x.domain(d3.extent(data.map(function(d,i) { 
+      return i*10; 
+    })));
+    tdp_y.domain([0, d3.max(data.map(function(d) {return d.total_dst_prt; }))]);
+    tdp_x2.domain(tdp_x.domain());
+    tdp_y2.domain(tdp_y.domain());
+    
+    tdp_focus.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", tdp_area);
+
+    tdp_focus.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(tdp_xAxis);
+
+    tdp_focus.append("g")
+        .attr("class", "y axis")
+        .call(tdp_yAxis);
+
+    tdp_context.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", tdp_area2);
+
+    tdp_context.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height2 + ")")
+        .call(tdp_xAxis2);
+
+    tdp_context.append("g")
+        .attr("class", "x brush")
+        .call(tdp_brush)
+      .selectAll("rect")
+        .attr("y", -6)
+        .attr("height", height2 + 7);
+
+    tdp_focus.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text("Time (seconds)");
+
+    tdp_focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -90)
+        .attr("dy", "0.75em")
+        .attr("transform", "rotate(-90)")
+        .text("UNIQUE DST PRT");
+    
+  //ENTROPY OF DST PORT FOR 10 SECOND SLICES
+
+    edp_x.domain(d3.extent(data.map(function(d,i) { 
+      return i*10; 
+    })));
+    edp_y.domain([0, d3.max(data.map(function(d) {return d.entropy_dst_prt; }))]);
+    edp_x2.domain(edp_x.domain());
+    edp_y2.domain(edp_y.domain());
+    
+    edp_focus.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", edp_area);
+
+    edp_focus.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(edp_xAxis);
+
+    edp_focus.append("g")
+        .attr("class", "y axis")
+        .call(edp_yAxis);
+
+    edp_context.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", edp_area2);
+
+    edp_context.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height2 + ")")
+        .call(edp_xAxis2);
+
+    edp_context.append("g")
+        .attr("class", "x brush")
+        .call(edp_brush)
+      .selectAll("rect")
+        .attr("y", -6)
+        .attr("height", height2 + 7);
+
+    edp_focus.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text("Time (seconds)");
+
+    edp_focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -90)
+        .attr("dy", "0.75em")
+        .attr("transform", "rotate(-90)")
+        .text("ENTROPY OF DST PRT");
+      
+    
+    
   //ENTROPY OF TCP FLAG FOR 10 SECOND SLICES
 
     etcpf_x.domain(d3.extent(data.map(function(d,i) { 
@@ -824,6 +1435,62 @@ function graph(source) {
         .attr("transform", "rotate(-90)")
         .text("ENTROPY OF TCP FLAG");
     
+    //AVG TCP WINDOW SIZE FOR 10 SECOND SLICES
+
+    avgw_x.domain(d3.extent(data.map(function(d,i) { 
+      return i*10; 
+    })));
+    avgw_y.domain([0, d3.max(data.map(function(d) {return d.avg_window_size; }))]);
+    avgw_x2.domain(avgw_x.domain());
+    avgw_y2.domain(avgw_y.domain());
+    
+    avgw_focus.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", avgw_area);
+
+    avgw_focus.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(avgw_xAxis);
+
+    avgw_focus.append("g")
+        .attr("class", "y axis")
+        .call(avgw_yAxis);
+
+    avgw_context.append("path")
+        .datum(data)
+        .attr("class", "area")
+        .attr("d", avgw_area2);
+
+    avgw_context.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height2 + ")")
+        .call(avgw_xAxis2);
+
+    avgw_context.append("g")
+        .attr("class", "x brush")
+        .call(avgw_brush)
+      .selectAll("rect")
+        .attr("y", -6)
+        .attr("height", height2 + 7);
+
+    avgw_focus.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height+30)
+        .text("Time (seconds)");
+
+    avgw_focus.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", -60)
+        .attr("x", -90)
+        .attr("dy", "0.75em")
+        .attr("transform", "rotate(-90)")
+        .text("AVG TCP WINDOW SIZE (BYTES)");
+    
   });
 
 
@@ -876,12 +1543,63 @@ function tdip_brushed() {
   tdip_focus.select(".x.axis").call(tdip_xAxis);
 }
 
+//ENTROPY DST IP PER 10 SECOND SLICE
+
+function edip_brushed() {
+  edip_x.domain(edip_brush.empty() ? edip_x2.domain() : edip_brush.extent());
+  edip_focus.select(".area").attr("d", edip_area);
+  edip_focus.select(".x.axis").call(edip_xAxis);
+}
+
+//TOTAL SRC PRT PER 10 SECOND SLICE
+
+function tsp_brushed() {
+  tsp_x.domain(tsp_brush.empty() ? tsp_x2.domain() : tsp_brush.extent());
+  tsp_focus.select(".area").attr("d", tsp_area);
+  tsp_focus.select(".x.axis").call(tsp_xAxis);
+}
+
+//ENTROPY SRC PRT PER 10 SECOND SLICE
+
+function esp_brushed() {
+  esp_x.domain(esp_brush.empty() ? esp_x2.domain() : esp_brush.extent());
+  esp_focus.select(".area").attr("d", esp_area);
+  esp_focus.select(".x.axis").call(esp_xAxis);
+}
+
+//TOTAL DST PRT PER 10 SECOND SLICE
+
+function tdp_brushed() {
+  tdp_x.domain(tdp_brush.empty() ? tdp_x2.domain() : tdp_brush.extent());
+  tdp_focus.select(".area").attr("d", tdp_area);
+  tdp_focus.select(".x.axis").call(tdp_xAxis);
+}
+
+//ENTROPY DST PRT PER 10 SECOND SLICE
+
+function edp_brushed() {
+  edp_x.domain(edp_brush.empty() ? edp_x2.domain() : edp_brush.extent());
+  edp_focus.select(".area").attr("d", edp_area);
+  edp_focus.select(".x.axis").call(edp_xAxis);
+}
+
+
+
+
 //ENTROPY TCP FLAG PER 10 SECOND SLICE
 
 function etcpf_brushed() {
   etcpf_x.domain(etcpf_brush.empty() ? etcpf_x2.domain() : etcpf_brush.extent());
   etcpf_focus.select(".area").attr("d", etcpf_area);
   etcpf_focus.select(".x.axis").call(etcpf_xAxis);
+}
+
+//AVG WINDOW SIZE PER 10 SECOND SLICE
+
+function avgw_brushed() {
+  avgw_x.domain(avgw_brush.empty() ? avgw_x2.domain() : avgw_brush.extent());
+  avgw_focus.select(".area").attr("d", avgw_area);
+  avgw_focus.select(".x.axis").call(avgw_xAxis);
 }
 
 function type(d) {
@@ -907,10 +1625,11 @@ function type(d) {
 
 
 
-function clean() {
+function clean(trace) {
   
   d3.select("body").selectAll("svg").remove();
   d3.select("body").selectAll("h1").remove();
+  d3.select("body").append("h1").text("CURRENTLY DISPLAYING: "+trace);
   d3.select("body").append("h1").text("AVERAGE PACKET SIZE");
 
 avg_pkt_size_svg = d3.select("body").append("svg")
@@ -1080,9 +1799,153 @@ tdip_context = tdip_svg.append("g")
     .attr("class", "tdip_context")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
+  /* ============================================================= 
+ ===== ENTROPY DST IP PER 10 SECOND SLICE ======
+ =============================================================
+  
+*/
+
+d3.select("body").append("h1").text("ENTROPY OF DST IP");  
+  
+edip_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+edip_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+edip_focus = edip_svg.append("g")
+    .attr("class", "edip_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+edip_context = edip_svg.append("g")
+    .attr("class", "edip_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
   
   /* ============================================================= 
-   ===== ENTROPY SRC IP PER 10 SECOND SLICE ======
+ ===== TOTAL SRC PRT PER 10 SECOND SLICE ======
+ =============================================================
+  
+*/
+
+d3.select("body").append("h1").text("TOTAL UNIQUE SRC PRT");  
+  
+tsp_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+tsp_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+tsp_focus = tsp_svg.append("g")
+    .attr("class", "tsp_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+tsp_context = tsp_svg.append("g")
+    .attr("class", "tsp_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+  
+ /* ============================================================= 
+ ===== ENTROPY OF SRC PRT PER 10 SECOND SLICE ======
+ =============================================================
+  
+*/
+
+d3.select("body").append("h1").text("ENTROPY OF SRC PRT");  
+  
+esp_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+esp_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+esp_focus = esp_svg.append("g")
+    .attr("class", "esp_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+esp_context = esp_svg.append("g")
+    .attr("class", "esp_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+      
+ /* ============================================================= 
+ ===== TOTAL UNIQUE DST PRT PER 10 SECOND SLICE ======
+ =============================================================
+  
+*/
+
+d3.select("body").append("h1").text("TOTAL UNIQUE DST PRT");  
+  
+tdp_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+tdp_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+tdp_focus = tdp_svg.append("g")
+    .attr("class", "tdp_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+tdp_context = tdp_svg.append("g")
+    .attr("class", "tdp_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+  
+  
+ /* ============================================================= 
+ ===== TOTAL UNIQUE DST PRT PER 10 SECOND SLICE ======
+ =============================================================
+  
+*/
+
+d3.select("body").append("h1").text("ENTROPY OF DST PRT");  
+  
+edp_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+edp_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+edp_focus = edp_svg.append("g")
+    .attr("class", "edp_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+edp_context = edp_svg.append("g")
+    .attr("class", "edp_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+  
+    
+  
+  
+  
+  /* ============================================================= 
+   ===== ENTROPY TCP FLAG PER 10 SECOND SLICE ======
    =============================================================
   
 */
@@ -1110,7 +1973,35 @@ etcpf_context = etcpf_svg.append("g")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
   
+  /* ============================================================= 
+   ===== AVG TCP WINDOW SIZE PER 10 SECOND SLICE ======
+   =============================================================
   
+*/
+
+d3.select("body").append("h1").text("AVG TCP WINDOW SIZE");  
+  
+avgw_svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+
+avgw_svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+avgw_focus = avgw_svg.append("g")
+    .attr("class", "avgw_focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+avgw_context = avgw_svg.append("g")
+    .attr("class", "avgw_context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+    
   
   
   
