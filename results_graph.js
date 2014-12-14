@@ -47,17 +47,120 @@ var brush = d3.svg.brush()
     .x(x2)
     .on("brush", brushed);
 
+/*
 var area = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return x(d.time); })
     .y0(height)
     .y1(function(d) { return y(d.avg_pkt_size); });
+*/
 
+var area_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "correct") {
+        return y(d.avg_pkt_size);
+      } else {
+        return 500.0;
+      }
+    });
+
+var area_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "incorrect") {
+        return y(d.avg_pkt_size);
+      } else {
+        return 500.0;
+      }
+    });
+
+var area_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "no_attack") {
+        return y(d.avg_pkt_size);
+      } else {
+        return 500.0;
+      }
+    });
+
+
+var area_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "attack") {
+        return y(d.avg_pkt_size);
+      } else {
+        return 500.0;
+      }
+    });
+
+
+/*
 var area2 = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return x2(d.time); })
     .y0(height2)
     .y1(function(d) { return y2(d.avg_pkt_size); });
+*/
+
+
+var area2_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if (d.color == "incorrect") {
+        return y2(d.avg_pkt_size);
+      } else {
+        return 50.0;
+      }
+    });
+
+var area2_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if (d.color == "correct") {
+        return y2(d.avg_pkt_size);
+      } else {
+        return 50.0;
+      }
+    });
+
+var area2_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if (d.color == "no_attack") {
+        return y2(d.avg_pkt_size);
+      } else {
+        return 50.0;
+      }
+    });
+
+var area2_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if (d.color == "attack") {
+        return y2(d.avg_pkt_size);
+      } else {
+        return 50.0;
+      }
+    });
 
 
 d3.select("body").append("h1").text("AVERAGE PACKET SIZE");
@@ -103,17 +206,118 @@ var tp_brush = d3.svg.brush()
     .x(tp_x2)
     .on("brush", tp_brushed);
 
+/*
 var tp_area = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return tp_x(d.time); })
     .y0(height)
     .y1(function(d) { return tp_y(d.total_pkt); });
 
+
 var tp_area2 = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return tp_x2(d.time); })
     .y0(height2)
     .y1(function(d) { return tp_y2(d.total_pkt); });
+*/
+
+var tp_area2_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+        if (d.color == "incorrect") {
+          return tp_y2(d.total_pkt);
+        } else {
+          return 50.0;
+        }
+    });
+
+var tp_area2_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+        if (d.color == "correct") {
+          return tp_y2(d.total_pkt);
+        } else {
+          return 50.0;
+        }
+    });
+
+var tp_area2_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+        if (d.color == "attack") {
+          return tp_y2(d.total_pkt);
+        } else {
+          return 50.0;
+        }
+    });
+
+var tp_area2_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+        if (d.color == "no_attack") {
+          return tp_y2(d.total_pkt);
+        } else {
+          return 50.0;
+        }
+    });
+
+var tp_area_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "incorrect") {
+        return tp_y(d.total_pkt);
+      } else {
+        return 500.0;
+      }
+    });
+
+var tp_area_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "correct") {
+        return tp_y(d.total_pkt);
+      } else {
+        return 500.0;
+      }
+    });
+
+var tp_area_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "attack") {
+        return tp_y(d.total_pkt);
+      } else {
+        return 500.0;
+      }
+    });
+
+var tp_area_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "no_attack") {
+        return tp_y(d.total_pkt);
+      } else {
+        return 500.0;
+      }
+    });
+
+
 
 d3.select("body").append("h1").text("TOTAL PACKET COUNT");
 
@@ -125,7 +329,7 @@ var tp_svg = d3.select("body").append("svg")
 
 tp_svg.append("defs").append("clipPath")
     .attr("id", "clip")
-  .append("rect")
+    .append("rect")
     .attr("width", width)
     .attr("height", height);
 
@@ -157,7 +361,7 @@ var asi_xAxis = d3.svg.axis().scale(asi_x).orient("bottom"),
 var asi_brush = d3.svg.brush()
     .x(asi_x2)
     .on("brush", asi_brushed);
-
+/*
 var asi_area = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return asi_x(d.time); })
@@ -169,6 +373,103 @@ var asi_area2 = d3.svg.area()
     .x(function(d) { return asi_x2(d.time); })
     .y0(height2)
     .y1(function(d) { return asi_y2(d.avg_size_ip); });
+*/
+
+var asi_area_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return asi_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "incorrect") {
+        return asi_y(d.avg_size_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var asi_area_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return asi_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "correct") {
+        return asi_y(d.avg_size_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var asi_area_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return asi_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "no_attack") {
+        return asi_y(d.avg_size_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var asi_area_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return asi_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "attack") {
+        return asi_y(d.avg_size_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var asi_area2_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return asi_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if (d.color == "incorrect") {
+        return asi_y2(d.avg_size_ip);
+      } else {
+        return 50.0;
+      }
+    });
+
+var asi_area2_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return asi_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if (d.color == "correct") {
+        return asi_y2(d.avg_size_ip);
+      } else {
+        return 50.0;
+      }
+    });
+
+var asi_area2_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return asi_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if (d.color == "no_attack") {
+        return asi_y2(d.avg_size_ip);
+      } else {
+        return 50.0;
+      }
+    });
+
+var asi_area2_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return asi_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if (d.color == "attack") {
+        return asi_y2(d.avg_size_ip);
+      } else {
+        return 50.0;
+      }
+    });
 
 d3.select("body").append("h1").text("AVERAGE BYTES SENT PER UNIQUE IP");
 
@@ -213,6 +514,7 @@ var tsip_brush = d3.svg.brush()
     .x(tsip_x2)
     .on("brush", tsip_brushed);
 
+/*
 var tsip_area = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return tsip_x(d.time); })
@@ -224,7 +526,103 @@ var tsip_area2 = d3.svg.area()
     .x(function(d) { return tsip_x2(d.time); })
     .y0(height2)
     .y1(function(d) { return tsip_y2(d.total_src_ip); });
+*/
 
+var tsip_area_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) {return tsip_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "incorrect") {
+        return tsip_y(d.total_src_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var tsip_area_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) {return tsip_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "correct") {
+        return tsip_y(d.total_src_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var tsip_area_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) {return tsip_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "attack") {
+        return tsip_y(d.total_src_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var tsip_area_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) {return tsip_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "no_attack") {
+        return tsip_y(d.total_src_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var tsip_area2_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) {return tsip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "incorrect") {
+        return tsip_y2(d.total_src_ip);
+      } else {
+        return 50.0;
+      }
+    });
+
+var tsip_area2_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) {return tsip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "correct") {
+        return tsip_y2(d.total_src_ip);
+      } else {
+        return 50.0;
+      }
+    });
+
+var tsip_area2_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) {return tsip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "attack") {
+        return tsip_y2(d.total_src_ip);
+      } else {
+        return 50.0;
+      }
+    });
+
+var tsip_area2_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) {return tsip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "no_attack") {
+        return tsip_y2(d.total_src_ip);
+      } else {
+        return 50.0;
+      }
+    });
 
 d3.select("body").append("h1").text("TOTAL UNIQUE SOURCE IP");
 
@@ -269,6 +667,7 @@ var esip_brush = d3.svg.brush()
     .x(esip_x2)
     .on("brush", esip_brushed);
 
+/*
 var esip_area = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return esip_x(d.time); })
@@ -280,7 +679,103 @@ var esip_area2 = d3.svg.area()
     .x(function(d) { return esip_x2(d.time); })
     .y0(height2)
     .y1(function(d) { return esip_y2(d.entropy_src_ip); });
+*/
 
+var esip_area_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esip_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "incorrect") {
+        return esip_y(d.entropy_src_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var esip_area_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esip_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "correct") {
+        return esip_y(d.entropy_src_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var esip_area_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esip_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "attack") {
+        return esip_y(d.entropy_src_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var esip_area_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esip_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if (d.color == "no_attack") {
+        return esip_y(d.entropy_src_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var esip_area2_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if (d.color == "incorrect") {
+        return esip_y2(d.entropy_src_ip);
+      } else {
+        return 50.0;
+      }
+    });
+
+var esip_area2_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if (d.color == "correct") {
+        return esip_y2(d.entropy_src_ip);
+      } else {
+        return 50.0;
+      }
+    });
+
+var esip_area2_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if (d.color == "attack") {
+        return esip_y2(d.entropy_src_ip);
+      } else {
+        return 50.0;
+      }
+    });
+
+var esip_area2_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if (d.color == "no_attack") {
+        return esip_y2(d.entropy_src_ip);
+      } else {
+        return 50.0;
+      }
+    });
 
 d3.select("body").append("h1").text("ENTROPY OF SOURCE IP");
 
@@ -323,6 +818,7 @@ var tdip_brush = d3.svg.brush()
     .x(tdip_x2)
     .on("brush", tdip_brushed);
 
+/*
 var tdip_area = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return tdip_x(d.time); })
@@ -334,6 +830,104 @@ var tdip_area2 = d3.svg.area()
     .x(function(d) { return tdip_x2(d.time); })
     .y0(height2)
     .y1(function(d) { return tdip_y2(d.total_dst_ip); });
+*/
+
+var tdip_area_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdip_x(d.time); })
+    .y0(height)
+    .y1(function(d) { 
+      if(d.color == "incorrect") {
+        return tdip_y(d.total_dst_ip); 
+      } else {
+        return 500.0;
+      }
+    });
+
+var tdip_area_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdip_x(d.time); })
+    .y0(height)
+    .y1(function(d) { 
+      if(d.color == "correct") {
+        return tdip_y(d.total_dst_ip); 
+      } else {
+        return 500.0;
+      }
+    });
+
+var tdip_area_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdip_x(d.time); })
+    .y0(height)
+    .y1(function(d) { 
+      if(d.color == "attack") {
+        return tdip_y(d.total_dst_ip); 
+      } else {
+        return 500.0;
+      }
+    });
+
+var tdip_area_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdip_x(d.time); })
+    .y0(height)
+    .y1(function(d) { 
+      if(d.color == "no_attack") {
+        return tdip_y(d.total_dst_ip); 
+      } else {
+        return 500.0;
+      }
+    });
+
+var tdip_area2_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { 
+      if(d.color == "incorrect") {
+        return tdip_y2(d.total_dst_ip); 
+      } else {
+        return 50.0;
+      }
+    });
+
+var tdip_area2_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { 
+      if(d.color == "correct") {
+        return tdip_y2(d.total_dst_ip); 
+      } else {
+        return 50.0;
+      }
+    });
+
+var tdip_area2_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { 
+      if(d.color == "attack") {
+        return tdip_y2(d.total_dst_ip); 
+      } else {
+        return 50.0;
+      }
+    });
+
+var tdip_area2_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { 
+      if(d.color == "no_attack") {
+        return tdip_y2(d.total_dst_ip); 
+      } else {
+        return 50.0;
+      }
+    });
+
 
 d3.select("body").append("h1").text("UNIQUE DST IP'S");
 
@@ -376,6 +970,7 @@ var edip_brush = d3.svg.brush()
     .x(edip_x2)
     .on("brush", edip_brushed);
 
+/*
 var edip_area = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return edip_x(d.time); })
@@ -387,6 +982,104 @@ var edip_area2 = d3.svg.area()
     .x(function(d) { return edip_x2(d.time); })
     .y0(height2)
     .y1(function(d) { return edip_y2(d.entropy_dst_ip); });
+*/
+
+var edip_area_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edip_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "incorrect") {
+        return edip_y(d.entropy_dst_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var edip_area_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edip_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "correct") {
+        return edip_y(d.entropy_dst_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var edip_area_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edip_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "attack") {
+        return edip_y(d.entropy_dst_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var edip_area_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edip_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "no_attack") {
+        return edip_y(d.entropy_dst_ip);
+      } else {
+        return 500.0;
+      }
+    });
+
+var edip_area2_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "incorrect") {
+        return edip_y2(d.entropy_dst_ip);
+      } else {
+        return 50.0;
+      }
+    });
+
+var edip_area2_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "correct") {
+        return edip_y2(d.entropy_dst_ip);
+      } else {
+        return 50.0;
+      }
+    });
+
+var edip_area2_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "attack") {
+        return edip_y2(d.entropy_dst_ip);
+      } else {
+        return 50.0;
+      }
+    });
+
+var edip_area2_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edip_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "no_attack") {
+        return edip_y2(d.entropy_dst_ip);
+      } else {
+        return 50.0;
+      }
+    });
+
 
 
 d3.select("body").append("h1").text("ENTROPY OF DST IP");
@@ -430,6 +1123,8 @@ var tsp_brush = d3.svg.brush()
     .x(tsp_x2)
     .on("brush", tsp_brushed);
 
+
+/*
 var tsp_area = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return tsp_x(d.time); })
@@ -441,6 +1136,109 @@ var tsp_area2 = d3.svg.area()
     .x(function(d) { return tsp_x2(d.time); })
     .y0(height2)
     .y1(function(d) { return tsp_y2(d.total_src_prt); });
+*/
+
+var tsp_area_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tsp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "incorrect") {
+        return tsp_y(d.total_src_prt);
+      } else {
+        return 500.0;
+      }
+    });
+      
+var tsp_area_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tsp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "correct") {
+        return tsp_y(d.total_src_prt);
+      } else {
+        return 500.0;
+      }
+    });
+      
+
+var tsp_area_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tsp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "attack") {
+        return tsp_y(d.total_src_prt);
+      } else {
+        return 500.0;
+      }
+    });
+      
+
+var tsp_area_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tsp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "no_attack") {
+        return tsp_y(d.total_src_prt);
+      } else {
+        return 500.0;
+      }
+    });
+
+var tsp_area2_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tsp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "incorrect") {
+        return tsp_y2(d.total_src_prt);
+      } else {
+        return 50.0;
+      }
+    });
+      
+var tsp_area2_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tsp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "correct") {
+        return tsp_y2(d.total_src_prt);
+      } else {
+        return 50.0;
+      }
+    });
+      
+
+var tsp_area2_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tsp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "attack") {
+        return tsp_y2(d.total_src_prt);
+      } else {
+        return 50.0;
+      }
+    });
+      
+
+var tsp_area2_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tsp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "no_attack") {
+        return tsp_y2(d.total_src_prt);
+      } else {
+        return 50.0;
+      }
+    });
+      
+
 
 
 d3.select("body").append("h1").text("TOTAL SRC PORT");
@@ -484,6 +1282,7 @@ var esp_brush = d3.svg.brush()
     .x(esp_x2)
     .on("brush", esp_brushed);
 
+/*
 var esp_area = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return esp_x(d.time); })
@@ -495,6 +1294,103 @@ var esp_area2 = d3.svg.area()
     .x(function(d) { return esp_x2(d.time); })
     .y0(height2)
     .y1(function(d) { return esp_y2(d.entropy_src_prt); });
+*/
+
+var esp_area_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "incorrect") {
+        return esp_y(d.entropy_src_prt);
+      } else {
+        return 500.0;
+      }
+    });
+
+var esp_area_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "correct") {
+        return esp_y(d.entropy_src_prt);
+      } else {
+        return 500.0;
+      }
+    });
+
+var esp_area_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "attack") {
+        return esp_y(d.entropy_src_prt);
+      } else {
+        return 500.0;
+      }
+    });
+
+var esp_area_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "no_attack") {
+        return esp_y(d.entropy_src_prt);
+      } else {
+        return 500.0;
+      }
+    });
+
+var esp_area2_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "incorrect") {
+        return esp_y2(d.entropy_src_prt);
+      } else {
+        return 50.0;
+      }
+    });
+
+var esp_area2_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "correct") {
+        return esp_y2(d.entropy_src_prt);
+      } else {
+        return 50.0;
+      }
+    });
+
+var esp_area2_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "attack") {
+        return esp_y2(d.entropy_src_prt);
+      } else {
+        return 50.0;
+      }
+    });
+
+var esp_area2_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return esp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "no_attack") {
+        return esp_y2(d.entropy_src_prt);
+      } else {
+        return 50.0;
+      }
+    });
 
 
 d3.select("body").append("h1").text("ENTROPY OF SRC PORT");
@@ -538,6 +1434,7 @@ var tdp_brush = d3.svg.brush()
     .x(tdp_x2)
     .on("brush", tdp_brushed);
 
+/*
 var tdp_area = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return tdp_x(d.time); })
@@ -549,7 +1446,103 @@ var tdp_area2 = d3.svg.area()
     .x(function(d) { return tdp_x2(d.time); })
     .y0(height2)
     .y1(function(d) { return tdp_y2(d.total_dst_prt); });
+*/
 
+var tdp_area_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdp_x(d.time); })
+    .y0(height)
+    .y1(function(d) { 
+      if(d.color == "incorrect") {
+        return tdp_y(d.total_dst_prt);
+      } else {
+        return 500.0;
+      }
+    });
+
+var tdp_area_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdp_x(d.time); })
+    .y0(height)
+    .y1(function(d) { 
+      if(d.color == "correct") {
+        return tdp_y(d.total_dst_prt);
+      } else {
+        return 500.0;
+      }
+    });
+
+var tdp_area_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdp_x(d.time); })
+    .y0(height)
+    .y1(function(d) { 
+      if(d.color == "attack") {
+        return tdp_y(d.total_dst_prt);
+      } else {
+        return 500.0;
+      }
+    });
+
+var tdp_area_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdp_x(d.time); })
+    .y0(height)
+    .y1(function(d) { 
+      if(d.color == "no_attack") {
+        return tdp_y(d.total_dst_prt);
+      } else {
+        return 500.0;
+      }
+    });
+
+var tdp_area2_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { 
+      if(d.color == "incorrect") {
+        return tdp_y2(d.total_dst_prt);
+      } else {
+        return 50.0;
+      }
+    });
+
+var tdp_area2_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { 
+      if(d.color == "correct") {
+        return tdp_y2(d.total_dst_prt);
+      } else {
+        return 50.0;
+      }
+    });
+
+var tdp_area2_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { 
+      if(d.color == "attack") {
+        return tdp_y2(d.total_dst_prt);
+      } else {
+        return 50.0;
+      }
+    });
+
+var tdp_area2_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return tdp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { 
+      if(d.color == "no_attack") {
+        return tdp_y2(d.total_dst_prt);
+      } else {
+        return 50.0;
+      }
+    });
 
 d3.select("body").append("h1").text("TOTAL UNIQUE DST PORT");
 
@@ -593,6 +1586,7 @@ var edp_brush = d3.svg.brush()
     .x(edp_x2)
     .on("brush", edp_brushed);
 
+/*
 var edp_area = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return edp_x(d.time); })
@@ -604,6 +1598,103 @@ var edp_area2 = d3.svg.area()
     .x(function(d) { return edp_x2(d.time); })
     .y0(height2)
     .y1(function(d) { return edp_y2(d.entropy_dst_prt); });
+*/
+
+var edp_area_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "incorrect") {
+        return edp_y(d.entropy_dst_prt); 
+      } else {
+        return 500.0;
+      }
+    });
+
+var edp_area_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "correct") {
+        return edp_y(d.entropy_dst_prt); 
+      } else {
+        return 500.0;
+      }
+    });
+
+var edp_area_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "attack") {
+        return edp_y(d.entropy_dst_prt); 
+      } else {
+        return 500.0;
+      }
+    });
+
+var edp_area_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edp_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "no_attack") {
+        return edp_y(d.entropy_dst_prt); 
+      } else {
+        return 500.0;
+      }
+    });
+var edp_area2_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "incorrect") {
+        return edp_y2(d.entropy_dst_prt); 
+      } else {
+        return 50.0;
+      }
+    });
+
+var edp_area2_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "correct") {
+        return edp_y2(d.entropy_dst_prt); 
+      } else {
+        return 50.0;
+      }
+    });
+
+var edp_area2_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "attack") {
+        return edp_y2(d.entropy_dst_prt); 
+      } else {
+        return 50.0;
+      }
+    });
+
+var edp_area2_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return edp_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "no_attack") {
+        return edp_y2(d.entropy_dst_prt); 
+      } else {
+        return 50.0;
+      }
+    });
+
 
 
 d3.select("body").append("h1").text("ENTROPY OF DST PORT");
@@ -653,6 +1744,7 @@ var etcpf_brush = d3.svg.brush()
     .x(etcpf_x2)
     .on("brush", etcpf_brushed);
 
+/*
 var etcpf_area = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return etcpf_x(d.time); })
@@ -664,6 +1756,105 @@ var etcpf_area2 = d3.svg.area()
     .x(function(d) { return etcpf_x2(d.time); })
     .y0(height2)
     .y1(function(d) { return etcpf_y2(d.entropy_tcp_flag); });
+*/
+
+var etcpf_area_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return etcpf_x(d.time); })
+    .y0(height)
+    .y1(function(d) { 
+      if(d.color == "incorrect") {
+        return etcpf_y(d.entropy_tcp_flag);
+      } else {
+        return 500.0;
+      }
+    });
+
+var etcpf_area_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return etcpf_x(d.time); })
+    .y0(height)
+    .y1(function(d) { 
+      if(d.color == "correct") {
+        return etcpf_y(d.entropy_tcp_flag);
+      } else {
+        return 500.0;
+      }
+    });
+
+var etcpf_area_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return etcpf_x(d.time); })
+    .y0(height)
+    .y1(function(d) { 
+      if(d.color == "attack") {
+        return etcpf_y(d.entropy_tcp_flag);
+      } else {
+        return 500.0;
+      }
+    });
+
+var etcpf_area_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return etcpf_x(d.time); })
+    .y0(height)
+    .y1(function(d) { 
+      if(d.color == "no_attack") {
+        return etcpf_y(d.entropy_tcp_flag);
+      } else {
+        return 500.0;
+      }
+    });
+
+
+var etcpf_area2_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return etcpf_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { 
+      if(d.color == "incorrect") {
+        return etcpf_y2(d.entropy_tcp_flag);
+      } else {
+        return 50.0;
+      }
+    });
+
+var etcpf_area2_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return etcpf_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { 
+      if(d.color == "correct") {
+        return etcpf_y2(d.entropy_tcp_flag);
+      } else {
+        return 50.0;
+      }
+    });
+
+var etcpf_area2_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return etcpf_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { 
+      if(d.color == "attack") {
+        return etcpf_y2(d.entropy_tcp_flag);
+      } else {
+        return 50.0;
+      }
+    });
+
+var etcpf_area2_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return etcpf_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) { 
+      if(d.color == "no_attack") {
+        return etcpf_y2(d.entropy_tcp_flag);
+      } else {
+        return 50.0;
+      }
+    });
+
 
 
 d3.select("body").append("h1").text("ENTROPY OF TCP FLAG");
@@ -708,6 +1899,7 @@ var avgw_brush = d3.svg.brush()
     .x(avgw_x2)
     .on("brush", avgw_brushed);
 
+/*
 var avgw_area = d3.svg.area()
     .interpolate("monotone")
     .x(function(d) { return avgw_x(d.time); })
@@ -719,6 +1911,104 @@ var avgw_area2 = d3.svg.area()
     .x(function(d) { return avgw_x2(d.time); })
     .y0(height2)
     .y1(function(d) { return avgw_y2(d.avg_window_size); });
+*/
+
+var avgw_area_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return avgw_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "incorrect") {
+        return avgw_y(d.avg_window_size); 
+      } else {
+        return 500.0;
+      }
+    });
+
+var avgw_area_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return avgw_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "correct") {
+        return avgw_y(d.avg_window_size); 
+      } else {
+        return 500.0;
+      }
+    });
+
+var avgw_area_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return avgw_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "attack") {
+        return avgw_y(d.avg_window_size); 
+      } else {
+        return 500.0;
+      }
+    });
+
+var avgw_area_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return avgw_x(d.time); })
+    .y0(height)
+    .y1(function(d) {
+      if(d.color == "no_attack") {
+        return avgw_y(d.avg_window_size); 
+      } else {
+        return 500.0;
+      }
+    });
+
+var avgw_area2_inc = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return avgw_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "incorrect") {
+        return avgw_y2(d.avg_window_size); 
+      } else {
+        return 50.0;
+      }
+    });
+
+var avgw_area2_corr = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return avgw_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "correct") {
+        return avgw_y2(d.avg_window_size); 
+      } else {
+        return 50.0;
+      }
+    });
+
+var avgw_area2_atk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return avgw_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "attack") {
+        return avgw_y2(d.avg_window_size); 
+      } else {
+        return 50.0;
+      }
+    });
+
+var avgw_area2_natk = d3.svg.area()
+    .interpolate("step-before")
+    .x(function(d) { return avgw_x2(d.time); })
+    .y0(height2)
+    .y1(function(d) {
+      if(d.color == "no_attack") {
+        return avgw_y2(d.avg_window_size); 
+      } else {
+        return 50.0;
+      }
+    });
+
 
 
 d3.select("body").append("h1").text("AVERAGE TCP WINDOW SIZE (BYTES)");
@@ -770,8 +2060,23 @@ function graph(source) {
 
     focus.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", area);
+        .attr("class", "area_blue")
+        .attr("d", area_natk);
+    
+    focus.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", area_atk);
+    
+    focus.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", area_corr);
+    
+    focus.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", area_inc);
 
     focus.append("g")
         .attr("class", "x axis")
@@ -785,9 +2090,24 @@ function graph(source) {
     
     context.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", area2);
+        .attr("class", "area_green")
+        .attr("d", area2_corr);
+    
+    context.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", area2_inc);
+    
+    context.append("path")
+        .datum(data)
+        .attr("class", "area_blue")
+        .attr("d", area2_natk);
 
+    context.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", area2_atk);
+    
     context.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height2 + ")")
@@ -827,8 +2147,23 @@ function graph(source) {
     
     tp_focus.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", tp_area);
+        .attr("class", "area_red")
+        .attr("d", tp_area_inc);
+    
+    tp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", tp_area_corr);
+    
+    tp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_blue")
+        .attr("d", tp_area_natk);
+    
+    tp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", tp_area_atk);
 
     tp_focus.append("g")
         .attr("class", "x axis")
@@ -841,8 +2176,23 @@ function graph(source) {
 
     tp_context.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", tp_area2);
+        .attr("class", "area_red")
+        .attr("d", tp_area2_inc);
+    
+    tp_context.append("path")
+        .datum(data)
+        .attr("class", "area_blue")
+        .attr("d", tp_area2_natk);
+    
+    tp_context.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", tp_area2_corr);
+    
+    tp_context.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", tp_area2_atk);
 
     tp_context.append("g")
         .attr("class", "x axis")
@@ -883,8 +2233,23 @@ function graph(source) {
 
     asi_focus.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", asi_area);
+        .attr("class", "area_blue")
+        .attr("d", asi_area_natk);
+    
+    asi_focus.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", asi_area_atk);
+    
+    asi_focus.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", asi_area_inc);
+    
+    asi_focus.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", asi_area_corr);
 
     asi_focus.append("g")
         .attr("class", "x axis")
@@ -897,8 +2262,24 @@ function graph(source) {
 
     asi_context.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", asi_area2);
+        .attr("class", "area_blue")
+        .attr("d", asi_area2_natk);
+    
+    asi_context.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", asi_area2_atk);
+    
+    asi_context.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", asi_area2_inc);
+
+    asi_context.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", asi_area2_corr);
+
 
     asi_context.append("g")
         .attr("class", "x axis")
@@ -938,10 +2319,25 @@ function graph(source) {
     tsip_x2.domain(tsip_x.domain());
     tsip_y2.domain(tsip_y.domain());
 
+     tsip_focus.append("path")
+        .datum(data)
+        .attr("class", "area_blue")
+        .attr("d", tsip_area_natk);
+    
     tsip_focus.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", tsip_area);
+        .attr("class", "area_purple")
+        .attr("d", tsip_area_atk);
+    
+    tsip_focus.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", tsip_area_inc);
+    
+    tsip_focus.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", tsip_area_corr);
 
     tsip_focus.append("g")
         .attr("class", "x axis")
@@ -954,9 +2350,24 @@ function graph(source) {
 
     tsip_context.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", tsip_area2);
+        .attr("class", "area_blue")
+        .attr("d", tsip_area2_natk);
+    
+    tsip_context.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", tsip_area2_atk);
+    
+    tsip_context.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", tsip_area2_inc);
 
+    tsip_context.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", tsip_area2_corr);
+    
     tsip_context.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height2 + ")")
@@ -996,8 +2407,23 @@ function graph(source) {
 
     esip_focus.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", esip_area);
+        .attr("class", "area_blue")
+        .attr("d", esip_area_natk);
+    
+    esip_focus.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", esip_area_atk);
+    
+    esip_focus.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", esip_area_inc);
+    
+    esip_focus.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", esip_area_corr);
 
     esip_focus.append("g")
         .attr("class", "x axis")
@@ -1010,9 +2436,24 @@ function graph(source) {
 
     esip_context.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", esip_area2);
+        .attr("class", "area_blue")
+        .attr("d", esip_area2_natk);
+    
+    esip_context.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", esip_area2_atk);
+    
+    esip_context.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", esip_area2_inc);
 
+    esip_context.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", esip_area2_corr);
+    
     esip_context.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height2 + ")")
@@ -1050,10 +2491,25 @@ function graph(source) {
     tdip_x2.domain(tdip_x.domain());
     tdip_y2.domain(tdip_y.domain());
     
+  tdip_focus.append("path")
+        .datum(data)
+        .attr("class", "area_blue")
+        .attr("d", tdip_area_natk);
+    
     tdip_focus.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", tdip_area);
+        .attr("class", "area_purple")
+        .attr("d", tdip_area_atk);
+    
+    tdip_focus.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", tdip_area_inc);
+    
+    tdip_focus.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", tdip_area_corr);
 
     tdip_focus.append("g")
         .attr("class", "x axis")
@@ -1066,8 +2522,23 @@ function graph(source) {
 
     tdip_context.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", tdip_area2);
+        .attr("class", "area_blue")
+        .attr("d", tdip_area2_natk);
+    
+    tdip_context.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", tdip_area2_atk);
+    
+    tdip_context.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", tdip_area2_inc);
+
+    tdip_context.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", tdip_area2_corr);
 
     tdip_context.append("g")
         .attr("class", "x axis")
@@ -1108,8 +2579,23 @@ function graph(source) {
     
     edip_focus.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", edip_area);
+        .attr("class", "area_blue")
+        .attr("d", edip_area_natk);
+    
+    edip_focus.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", edip_area_atk);
+    
+    edip_focus.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", edip_area_inc);
+    
+    edip_focus.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", edip_area_corr);
 
     edip_focus.append("g")
         .attr("class", "x axis")
@@ -1122,9 +2608,24 @@ function graph(source) {
 
     edip_context.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", edip_area2);
+        .attr("class", "area_blue")
+        .attr("d", edip_area2_natk);
+    
+    edip_context.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", edip_area2_atk);
+    
+    edip_context.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", edip_area2_inc);
 
+    edip_context.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", edip_area2_corr);
+    
     edip_context.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height2 + ")")
@@ -1164,8 +2665,23 @@ function graph(source) {
     
     tsp_focus.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", tsp_area);
+        .attr("class", "area_blue")
+        .attr("d", tsp_area_natk);
+    
+    tsp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", tsp_area_atk);
+    
+    tsp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", tsp_area_inc);
+    
+    tsp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", tsp_area_corr);
 
     tsp_focus.append("g")
         .attr("class", "x axis")
@@ -1178,8 +2694,23 @@ function graph(source) {
 
     tsp_context.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", tsp_area2);
+        .attr("class", "area_blue")
+        .attr("d", tsp_area2_natk);
+    
+    tsp_context.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", tsp_area2_atk);
+    
+    tsp_context.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", tsp_area2_inc);
+
+    tsp_context.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", tsp_area2_corr);
 
     tsp_context.append("g")
         .attr("class", "x axis")
@@ -1220,8 +2751,23 @@ function graph(source) {
     
     esp_focus.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", esp_area);
+        .attr("class", "area_blue")
+        .attr("d", esp_area_natk);
+    
+    esp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", esp_area_atk);
+    
+    esp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", esp_area_inc);
+    
+    esp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", esp_area_corr);
 
     esp_focus.append("g")
         .attr("class", "x axis")
@@ -1234,8 +2780,23 @@ function graph(source) {
 
     esp_context.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", esp_area2);
+        .attr("class", "area_blue")
+        .attr("d", esp_area2_natk);
+    
+    esp_context.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", esp_area2_atk);
+    
+    esp_context.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", esp_area2_inc);
+
+    esp_context.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", esp_area2_corr);
 
     esp_context.append("g")
         .attr("class", "x axis")
@@ -1274,10 +2835,25 @@ function graph(source) {
     tdp_x2.domain(tdp_x.domain());
     tdp_y2.domain(tdp_y.domain());
     
+   tdp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_blue")
+        .attr("d", tdp_area_natk);
+    
     tdp_focus.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", tdp_area);
+        .attr("class", "area_purple")
+        .attr("d", tdp_area_atk);
+    
+    tdp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", tdp_area_inc);
+    
+    tdp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", tdp_area_corr);
 
     tdp_focus.append("g")
         .attr("class", "x axis")
@@ -1290,8 +2866,23 @@ function graph(source) {
 
     tdp_context.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", tdp_area2);
+        .attr("class", "area_blue")
+        .attr("d", tdp_area2_natk);
+    
+    tdp_context.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", tdp_area2_atk);
+    
+    tdp_context.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", tdp_area2_inc);
+
+    tdp_context.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", tdp_area2_corr);
 
     tdp_context.append("g")
         .attr("class", "x axis")
@@ -1330,10 +2921,25 @@ function graph(source) {
     edp_x2.domain(edp_x.domain());
     edp_y2.domain(edp_y.domain());
     
+  edp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_blue")
+        .attr("d", edp_area_natk);
+    
     edp_focus.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", edp_area);
+        .attr("class", "area_purple")
+        .attr("d", edp_area_atk);
+    
+    edp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", edp_area_inc);
+    
+    edp_focus.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", edp_area_corr);
 
     edp_focus.append("g")
         .attr("class", "x axis")
@@ -1346,8 +2952,23 @@ function graph(source) {
 
     edp_context.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", edp_area2);
+        .attr("class", "area_blue")
+        .attr("d", edp_area2_natk);
+    
+    edp_context.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", edp_area2_atk);
+    
+    edp_context.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", edp_area2_inc);
+
+    edp_context.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", edp_area2_corr);
 
     edp_context.append("g")
         .attr("class", "x axis")
@@ -1388,10 +3009,25 @@ function graph(source) {
     etcpf_x2.domain(etcpf_x.domain());
     etcpf_y2.domain(etcpf_y.domain());
     
+   etcpf_focus.append("path")
+        .datum(data)
+        .attr("class", "area_blue")
+        .attr("d", etcpf_area_natk);
+    
     etcpf_focus.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", etcpf_area);
+        .attr("class", "area_purple")
+        .attr("d", etcpf_area_atk);
+    
+    etcpf_focus.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", etcpf_area_inc);
+    
+    etcpf_focus.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", etcpf_area_corr);
 
     etcpf_focus.append("g")
         .attr("class", "x axis")
@@ -1404,8 +3040,23 @@ function graph(source) {
 
     etcpf_context.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", etcpf_area2);
+        .attr("class", "area_blue")
+        .attr("d", etcpf_area2_natk);
+    
+    etcpf_context.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", etcpf_area2_atk);
+    
+    etcpf_context.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", etcpf_area2_inc);
+
+    etcpf_context.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", etcpf_area2_corr);
 
     etcpf_context.append("g")
         .attr("class", "x axis")
@@ -1444,10 +3095,25 @@ function graph(source) {
     avgw_x2.domain(avgw_x.domain());
     avgw_y2.domain(avgw_y.domain());
     
+  avgw_focus.append("path")
+        .datum(data)
+        .attr("class", "area_blue")
+        .attr("d", avgw_area_natk);
+    
     avgw_focus.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", avgw_area);
+        .attr("class", "area_purple")
+        .attr("d", avgw_area_atk);
+    
+    avgw_focus.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", avgw_area_inc);
+    
+    avgw_focus.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", avgw_area_corr);
 
     avgw_focus.append("g")
         .attr("class", "x axis")
@@ -1460,9 +3126,24 @@ function graph(source) {
 
     avgw_context.append("path")
         .datum(data)
-        .attr("class", "area")
-        .attr("d", avgw_area2);
+        .attr("class", "area_blue")
+        .attr("d", avgw_area2_natk);
+    
+    avgw_context.append("path")
+        .datum(data)
+        .attr("class", "area_purple")
+        .attr("d", avgw_area2_atk);
+    
+    avgw_context.append("path")
+        .datum(data)
+        .attr("class", "area_red")
+        .attr("d", avgw_area2_inc);
 
+    avgw_context.append("path")
+        .datum(data)
+        .attr("class", "area_green")
+        .attr("d", avgw_area2_corr);
+    
     avgw_context.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height2 + ")")
@@ -1499,7 +3180,10 @@ function graph(source) {
 
 function brushed() {
   x.domain(brush.empty() ? x2.domain() : brush.extent());
-  focus.select(".area").attr("d", area);
+  focus.select(".area_blue").attr("d", area_natk);
+  focus.select(".area_purple").attr("d", area_atk);
+  focus.select(".area_red").attr("d", area_inc);
+  focus.select(".area_green").attr("d", area_corr);
   focus.select(".x.axis").call(xAxis);
 }
 
@@ -1507,7 +3191,10 @@ function brushed() {
 
 function tp_brushed() {
   tp_x.domain(tp_brush.empty() ? tp_x2.domain() : tp_brush.extent());
-  tp_focus.select(".area").attr("d", tp_area);
+  tp_focus.select(".area_blue").attr("d", tp_area_natk);
+  tp_focus.select(".area_purple").attr("d", tp_area_atk);
+  tp_focus.select(".area_red").attr("d", tp_area_inc);
+  tp_focus.select(".area_green").attr("d", tp_area_corr);
   tp_focus.select(".x.axis").call(tp_xAxis);
 }
 
@@ -1515,7 +3202,10 @@ function tp_brushed() {
 
 function asi_brushed() {
   asi_x.domain(asi_brush.empty() ? asi_x2.domain() : asi_brush.extent());
-  asi_focus.select(".area").attr("d", asi_area);
+  asi_focus.select(".area_blue").attr("d", asi_area_natk);
+  asi_focus.select(".area_purple").attr("d", asi_area_atk);
+  asi_focus.select(".area_red").attr("d", asi_area_inc);
+  asi_focus.select(".area_green").attr("d", asi_area_corr);
   asi_focus.select(".x.axis").call(asi_xAxis);
 }
 
@@ -1523,7 +3213,10 @@ function asi_brushed() {
 
 function tsip_brushed() {
   tsip_x.domain(tsip_brush.empty() ? tsip_x2.domain() : tsip_brush.extent());
-  tsip_focus.select(".area").attr("d", tsip_area);
+  tsip_focus.select(".area_blue").attr("d", tsip_area_natk);
+  tsip_focus.select(".area_purple").attr("d", tsip_area_atk);
+  tsip_focus.select(".area_red").attr("d", tsip_area_inc);
+  tsip_focus.select(".area_green").attr("d", tsip_area_corr);
   tsip_focus.select(".x.axis").call(tsip_xAxis);
 }
 
@@ -1531,7 +3224,10 @@ function tsip_brushed() {
 
 function esip_brushed() {
   esip_x.domain(esip_brush.empty() ? esip_x2.domain() : esip_brush.extent());
-  esip_focus.select(".area").attr("d", esip_area);
+  esip_focus.select(".area_blue").attr("d", esip_area_natk);
+  esip_focus.select(".area_purple").attr("d", esip_area_atk);
+  esip_focus.select(".area_red").attr("d", esip_area_inc);
+  esip_focus.select(".area_green").attr("d", esip_area_corr);
   esip_focus.select(".x.axis").call(esip_xAxis);
 }
 
@@ -1539,7 +3235,10 @@ function esip_brushed() {
 
 function tdip_brushed() {
   tdip_x.domain(tdip_brush.empty() ? tdip_x2.domain() : tdip_brush.extent());
-  tdip_focus.select(".area").attr("d", tdip_area);
+  tdip_focus.select(".area_blue").attr("d", tdip_area_natk);
+  tdip_focus.select(".area_purple").attr("d", tdip_area_atk);
+  tdip_focus.select(".area_red").attr("d", tdip_area_inc);
+  tdip_focus.select(".area_green").attr("d", tdip_area_corr);
   tdip_focus.select(".x.axis").call(tdip_xAxis);
 }
 
@@ -1547,7 +3246,10 @@ function tdip_brushed() {
 
 function edip_brushed() {
   edip_x.domain(edip_brush.empty() ? edip_x2.domain() : edip_brush.extent());
-  edip_focus.select(".area").attr("d", edip_area);
+  edip_focus.select(".area_blue").attr("d", edip_area_natk);
+  edip_focus.select(".area_purple").attr("d", edip_area_atk);
+  edip_focus.select(".area_red").attr("d", edip_area_inc);
+  edip_focus.select(".area_green").attr("d", edip_area_corr);
   edip_focus.select(".x.axis").call(edip_xAxis);
 }
 
@@ -1555,7 +3257,10 @@ function edip_brushed() {
 
 function tsp_brushed() {
   tsp_x.domain(tsp_brush.empty() ? tsp_x2.domain() : tsp_brush.extent());
-  tsp_focus.select(".area").attr("d", tsp_area);
+  tsp_focus.select(".area_blue").attr("d", tsp_area_natk);
+  tsp_focus.select(".area_purple").attr("d", tsp_area_atk);
+  tsp_focus.select(".area_red").attr("d", tsp_area_inc);
+  tsp_focus.select(".area_green").attr("d", tsp_area_corr);
   tsp_focus.select(".x.axis").call(tsp_xAxis);
 }
 
@@ -1563,15 +3268,20 @@ function tsp_brushed() {
 
 function esp_brushed() {
   esp_x.domain(esp_brush.empty() ? esp_x2.domain() : esp_brush.extent());
-  esp_focus.select(".area").attr("d", esp_area);
+  esp_focus.select(".area_blue").attr("d", esp_area_natk);
+  esp_focus.select(".area_purple").attr("d", esp_area_atk);
+  esp_focus.select(".area_red").attr("d", esp_area_inc);
+  esp_focus.select(".area_green").attr("d", esp_area_corr);
   esp_focus.select(".x.axis").call(esp_xAxis);
 }
-
 //TOTAL DST PRT PER 10 SECOND SLICE
 
 function tdp_brushed() {
   tdp_x.domain(tdp_brush.empty() ? tdp_x2.domain() : tdp_brush.extent());
-  tdp_focus.select(".area").attr("d", tdp_area);
+  tdp_focus.select(".area_blue").attr("d", tdp_area_natk);
+  tdp_focus.select(".area_purple").attr("d", tdp_area_atk);
+  tdp_focus.select(".area_red").attr("d", tdp_area_inc);
+  tdp_focus.select(".area_green").attr("d", tdp_area_corr);
   tdp_focus.select(".x.axis").call(tdp_xAxis);
 }
 
@@ -1579,7 +3289,10 @@ function tdp_brushed() {
 
 function edp_brushed() {
   edp_x.domain(edp_brush.empty() ? edp_x2.domain() : edp_brush.extent());
-  edp_focus.select(".area").attr("d", edp_area);
+  edp_focus.select(".area_blue").attr("d", edp_area_natk);
+  edp_focus.select(".area_purple").attr("d", edp_area_atk);
+  edp_focus.select(".area_red").attr("d", edp_area_inc);
+  edp_focus.select(".area_green").attr("d", edp_area_corr);
   edp_focus.select(".x.axis").call(edp_xAxis);
 }
 
@@ -1590,7 +3303,10 @@ function edp_brushed() {
 
 function etcpf_brushed() {
   etcpf_x.domain(etcpf_brush.empty() ? etcpf_x2.domain() : etcpf_brush.extent());
-  etcpf_focus.select(".area").attr("d", etcpf_area);
+  etcpf_focus.select(".area_blue").attr("d", etcpf_area_natk);
+  etcpf_focus.select(".area_purple").attr("d", etcpf_area_atk);
+  etcpf_focus.select(".area_red").attr("d", etcpf_area_inc);
+  etcpf_focus.select(".area_green").attr("d", etcpf_area_corr);
   etcpf_focus.select(".x.axis").call(etcpf_xAxis);
 }
 
@@ -1598,7 +3314,10 @@ function etcpf_brushed() {
 
 function avgw_brushed() {
   avgw_x.domain(avgw_brush.empty() ? avgw_x2.domain() : avgw_brush.extent());
-  avgw_focus.select(".area").attr("d", avgw_area);
+  avgw_focus.select(".area_blue").attr("d", avgw_area_natk);
+  avgw_focus.select(".area_purple").attr("d", avgw_area_atk);
+  avgw_focus.select(".area_red").attr("d", avgw_area_inc);
+  avgw_focus.select(".area_green").attr("d", avgw_area_corr);
   avgw_focus.select(".x.axis").call(avgw_xAxis);
 }
 
@@ -2010,4 +3729,4 @@ avgw_context = avgw_svg.append("g")
 
 
 
-graph("old/trace10.csv");
+graph("csvs/trace10.csv");
