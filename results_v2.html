@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <head>
   <style>
-
-svg {
-  font: 10px sans-serif;
-}
-    
 body{
   background:lightgray;
 }
-   
+    
+svg {
+  font: 10px sans-serif;
+}
 
 .area {
   fill: steelblue;
@@ -32,7 +30,7 @@ body{
 }
     
 .area_green{
-  fill: green;
+  fill: forestgreen;
   clip-path: url(#clip);
 }    
 
@@ -54,7 +52,7 @@ body{
   fill-opacity: .125;
   shape-rendering: crispEdges;
 }
-    
+
 #BLUE {
   display:inline-block;
   height:10px;
@@ -83,28 +81,27 @@ body{
   background-color:purple;
 }
     
-
 </style>
   <title>DDOS Classification</title>
   <script src="http://d3js.org/d3.v3.js" charset="utf-8"></script>
 </head>
 <body>
-  <p><h3>Results v1</h3></p>
+  <p><h3>Results v2</h3></p>
   <p>The graphs below show how the data is labeled.</p>
-  <p>The first half of the data was used for training, and the second half for validation.</p>
-  <p><div id="BLUE"></div> = no attack (training)</p>
-  <p><div id="PURPLE"></div> = attack (training)</p>
-  <p><div id="GREEN"></div> = correct result (validation)</p>
-  <p><div id="RED"></div> = incorrect result (validation)</p>
+  <p>The first half of the data was used for training, and the second half for validation</p>
+  <p><div id="BLUE"></div> = no attack</p>
+  <p><div id="PURPLE"></div> = correctly identified attack</p>
+  <p><div id="GREEN"></div> = false negative (wrongly classified no attack)</p>
+  <p><div id="RED"></div> = false positive (wrongly classified attack)</p>
   <p><a href="index.html">plain</a></p>
-  <p><a href="results_v2.html">results (false positives & negatives)</a></p>
+  <p><a href="results.html">results (false positives, split by validation/train)</a></p>
   <p>
-  <button onclick="graph('csvs/trace10.csv')">Trace10</button>
-  <button onclick="graph('csvs/trace09.csv')">Trace09</button>
-  <button onclick="graph('csvs/trace08.csv')">Trace08</button>
+  <button onclick="graph('csvs_v2/trace10.csv')">Trace10</button>
+  <button onclick="graph('csvs_v2/trace09.csv')">Trace09</button>
+  <button onclick="graph('csvs_v2/trace08.csv')">Trace08</button>
   <!--button onclick="graph('trace06.csv')">Trace06</button-->
-  <button onclick="graph('csvs/trace05.csv')">Trace05</button>
-  <button onclick="graph('csvs/caida_output.csv')">CAIDA</button>
+  <button onclick="graph('csvs_v2/trace05.csv')">Trace05</button>
+  <button onclick="graph('csvs_v2/caida_output.csv')">CAIDA</button>
   </p>
   <p>
   <!--button onclick="graph('trace04.csv')">Trace04</button>
@@ -115,5 +112,5 @@ body{
   <button onclick="graph('gen_trace03.csv')">GenTrace03</button>
   <button onclick="graph('gen_trace02.csv')">GenTrace02</button>
   <button onclick="graph('gen_trace01.csv')">GenTrace01</button-->
-  <script src="results_graph.js"></script>
+  <script src="results_graph_v2.js"></script>
 </body>

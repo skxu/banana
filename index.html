@@ -5,6 +5,11 @@
 svg {
   font: 10px sans-serif;
 }
+    
+body{
+  background:lightgray;
+}
+   
 
 .area {
   fill: steelblue;
@@ -35,7 +40,8 @@ svg {
   <script src="http://d3js.org/d3.v3.js" charset="utf-8"></script>
 </head>
 <body>
-  <p><a href="results.html">results</a></p>
+  <p><a href="results.html">results (false positives, split by validation/train)</a></p>
+  <p><a href="results_v2.html">results (false positives & negatives)</a></p>
   <p>
   <button onclick="graph('old/trace10.csv')">Trace10</button>
   <button onclick="graph('old/trace09.csv')">Trace09</button>
