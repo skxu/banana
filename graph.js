@@ -2010,4 +2010,4 @@ avgw_context = avgw_svg.append("g")
 
 
 
-graph("old/trace10.csv");
+graph("old/trace08.csv");
