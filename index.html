@@ -9,7 +9,21 @@ svg {
 body{
   background:lightgray;
 }
-   
+    
+a{
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.big {
+  display: block;
+  font-size: 2em;
+  -webkit-margin-before: 0.67em;
+  -webkit-margin-after: 0.67em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-weight: bold;
+}
 
 .area {
   fill: steelblue;
@@ -40,8 +54,10 @@ body{
   <script src="http://d3js.org/d3.v3.js" charset="utf-8"></script>
 </head>
 <body>
-  <p><a href="results.html">results v1 (false positives, split by validation/train)</a></p>
-  <p><a href="results_v2.html">results v2(false positives & negatives)</a> -- most up to date</p>
+  <p class="big">LINKS TO LABELED RESULTS</p>
+  <p><a href="results.html">results v1 (colored by validation/train)</a></p>
+  <p><a href="results_v2.html">results v2(colored by false positives & negatives)</a> -- most up to date</p>
+  <p class="big">LOAD DATA FROM OTHER TRACES</p>
   <p>
   <button onclick="graph('old/trace10.csv')">Trace10</button>
   <button onclick="graph('old/trace09.csv')">Trace09</button>
